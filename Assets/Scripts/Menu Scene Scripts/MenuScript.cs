@@ -5,7 +5,7 @@ using TMPro;
 
 public class MenuScript : MonoBehaviour
 {
-    private SingletonManager singletonManager;
+    private Singleton singletonManager;
 
 
     // UI Game Objects
@@ -21,7 +21,7 @@ public class MenuScript : MonoBehaviour
 
 
     void Start() {
-        singletonManager = SingletonManager.Instance;
+        singletonManager = Singleton.Instance;
 
         sCharIndex = singletonManager.characterIndex;
         sPlyrName = singletonManager.playerName;
@@ -57,8 +57,11 @@ public class MenuScript : MonoBehaviour
         // Check Singleton variables
         Debug.Log("Player: " + sPlyrName + " | Index: " + sCharIndex);
 
+        singletonManager.characterIndex = sCharIndex;
+        singletonManager.playerName = sPlyrName;
+
         // Load new scene
-        //SceneManager.LoadScene("City");
+        SceneManager.LoadScene("Game");
     } //-- PlayGame()
 
     public void ShowMenuPanel() {
