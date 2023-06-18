@@ -1,59 +1,89 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class MenuScript : MonoBehaviour
 {
-    // Reference variable for SingletonManager.Instance
     private SingletonManager singletonManager;
 
 
-    // UI Variables
+    // UI Game Objects
     public TMP_InputField playerNameInput;
     public GameObject characterButtons;
+    public GameObject menuPanel;
+    public GameObject characterPanel;
 
 
-
-    // Variables
+    // Variable Declaration
     string sPlyrName;
     int sCharIndex = 0;
 
-    void Start()
-    {
-        // Assign the SingletonManager.Instance to the reference variable
+
+    void Start() {
         singletonManager = SingletonManager.Instance;
 
-        // Accessing the variables from the reference variable
         sCharIndex = singletonManager.characterIndex;
         sPlyrName = singletonManager.playerName;
 
-        // Get all the child buttons of the parent GameObject
+        // Get all the child buttons of the Button_Array game object
         ButtonHandler[] childButtons = characterButtons.GetComponentsInChildren<ButtonHandler>();
 
-        // Assign the button indices
-        for (int i = 0; i < childButtons.Length; i++) {
+        // Assign the child button indices
+        for (int i = 0; i < childButtons.Length; i++)
+        {
             childButtons[i].buttonIndex = i;
         }
-    }
+
+        // Default panel to be active
+        menuPanel.SetActive(true);
+        characterPanel.SetActive(false);
+    } //-- Start()
 
     void Update() {
-        sPlyrName = playerNameInput.text;
-    }
+        sPlyrName = playerNameInput.text;   // Update player name on SingletonManager
+    } //-- Update()
 
     public void SetSelectedButton(int buttonIndex) {
-        sCharIndex = buttonIndex;
-    }
+        sCharIndex = buttonIndex;   // Update character index on SingletonManager
+    } //-- SetSelectedButton()
 
-    public void SaveData() {
-        if(sPlyrName == "") {
+    public void PlayGame() {
+        if (sPlyrName == "") {
             int rndID = Random.Range(0000, 9999);
-
             sPlyrName = "Player" + rndID;
         }
-        
-        Debug.Log(sPlyrName);
-        Debug.Log(sCharIndex);
-    }
+
+        // Check Singleton variables
+        Debug.Log("Player: " + sPlyrName + " | Index: " + sCharIndex);
+
+        // Load new scene
+        //SceneManager.LoadScene("City");
+    } //-- PlayGame()
+
+    public void ShowMenuPanel() {
+        // Reset character button states
+        ButtonHandler[] childButtons = characterButtons.GetComponentsInChildren<ButtonHandler>();
+
+        foreach (ButtonHandler button in childButtons)
+        {
+            button.EnableButton();
+        }
+
+        // Reset values to default
+        playerNameInput.text = "Player";
+
+        sPlyrName = playerNameInput.text;
+        sCharIndex = 0;
+
+        menuPanel.SetActive(true);
+        characterPanel.SetActive(false);
+    } //-- ShowMenuPanel()
+
+    public void ShowCharacterPanel() {
+        menuPanel.SetActive(false);
+        characterPanel.SetActive(true);
+    } //-- ShowCharacterPanel()
 }
 
 
@@ -61,6 +91,6 @@ public class MenuScript : MonoBehaviour
 /*
 
 Made by : Rey M. Oronos, Jr.
-Project : 
+Project : Unity Multiplayer Demo
 
 */

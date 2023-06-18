@@ -4,8 +4,10 @@ public class SingletonManager : MonoBehaviour
 {
     private static SingletonManager instance;
 
-    public int characterIndex;
-    public string playerName;
+    // User created variables
+    public int characterIndex = 0;  // For Character Buttons and Mesh Selection
+    public string playerName;   // For Player Name
+
 
     // Public property to access the instance
     public static SingletonManager Instance
@@ -13,19 +15,18 @@ public class SingletonManager : MonoBehaviour
         get { return instance; }
     }
 
-    private void Awake()
-    {
-        // Check if an instance already exists
+
+    private void Awake() {
         if (instance != null && instance != this)
         {
-            Destroy(this.gameObject); // Destroy duplicate instances
+            Destroy(this.gameObject);   // Destroy duplicate instances
         }
         else
         {
-            instance = this; // Assign the instance
-            DontDestroyOnLoad(this.gameObject); // Optional: Keep the singleton across scenes
+            instance = this;
+            DontDestroyOnLoad(this.gameObject); // Keep the singleton across scenes
         }
-    }
+    } //-- Awake()
 }
 
 
