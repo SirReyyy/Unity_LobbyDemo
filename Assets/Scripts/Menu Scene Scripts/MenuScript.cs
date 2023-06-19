@@ -11,7 +11,6 @@ public class MenuScript : MonoBehaviour
     // UI Game Objects
     public TMP_InputField playerNameInput;
     public GameObject characterButtons;
-    public GameObject menuPanel;
     public GameObject characterPanel;
 
 
@@ -34,10 +33,6 @@ public class MenuScript : MonoBehaviour
         {
             childButtons[i].buttonIndex = i;
         }
-
-        // Default panel to be active
-        menuPanel.SetActive(true);
-        characterPanel.SetActive(false);
     } //-- Start()
 
     void Update() {
@@ -64,7 +59,7 @@ public class MenuScript : MonoBehaviour
         SceneManager.LoadScene("Game");
     } //-- PlayGame()
 
-    public void ShowMenuPanel() {
+    public void ReloadLobby() {
         // Reset character button states
         ButtonHandler[] childButtons = characterButtons.GetComponentsInChildren<ButtonHandler>();
 
@@ -79,14 +74,9 @@ public class MenuScript : MonoBehaviour
         sPlyrName = playerNameInput.text;
         sCharIndex = 0;
 
-        menuPanel.SetActive(true);
-        characterPanel.SetActive(false);
-    } //-- ShowMenuPanel()
-
-    public void ShowCharacterPanel() {
-        menuPanel.SetActive(false);
-        characterPanel.SetActive(true);
-    } //-- ShowCharacterPanel()
+        // Reload Lobby Scene
+        SceneManager.LoadScene("Lobby");
+    } //-- ReloadLobby()
 }
 
 
