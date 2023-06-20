@@ -7,7 +7,6 @@ public class ConnectToServer : MonoBehaviourPunCallbacks {
 
     void Start() {
         PhotonNetwork.ConnectUsingSettings();
-        //_lobbyScript = GetComponent<LobbyScript>();
     }
 
     public override void OnConnectedToMaster() {

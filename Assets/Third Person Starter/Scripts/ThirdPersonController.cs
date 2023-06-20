@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-using Photon.Pun;
+using UnityEngine.SceneManagement; //--
+using Photon.Pun; //--
+
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -123,8 +125,12 @@ namespace StarterAssets
             }
         }
 
+        // Singleton
+        private Singleton singletonManager;
         // Photon View component
         PhotonView photonView;
+
+        
 
 
         private void Awake()
@@ -156,8 +162,11 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
 
 
-            //
+            //-- added --
+            singletonManager = Singleton.Instance;
+
             photonView = GetComponent<PhotonView>();
+            //-- added --
         }
 
         private void Update()
@@ -168,6 +177,10 @@ namespace StarterAssets
                 JumpAndGravity();
                 GroundedCheck();
                 Move();
+
+                //-- added --
+                Exit();
+                //-- added --
             }
         }
 
@@ -357,6 +370,20 @@ namespace StarterAssets
                 _verticalVelocity += Gravity * Time.deltaTime;
             }
         }
+
+        //-- added --
+        private void Exit() {
+            if(_input.exit) {
+
+                _input.exit = false;
+
+                // Reload Lobby Scene
+                singletonManager.onPlay = false;
+                SceneManager.LoadScene("Lobby");
+                PhotonNetwork.LeaveRoom();
+            }
+        }
+        //-- added --
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {

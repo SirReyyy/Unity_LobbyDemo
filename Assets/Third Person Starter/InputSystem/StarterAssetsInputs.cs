@@ -13,6 +13,7 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool exit;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -44,6 +45,13 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		//-- added --
+		public void OnExit(InputValue value)
+		{
+			ExitInput(value.isPressed);
+		}
+		//-- added --
 #endif
 
 
@@ -66,6 +74,13 @@ namespace StarterAssets
 		{
 			sprint = newSprintState;
 		}
+
+		//-- added --
+		public void ExitInput(bool newExitState)
+		{
+			exit = newExitState;
+		}
+		//-- added --
 
 		private void OnApplicationFocus(bool hasFocus)
 		{

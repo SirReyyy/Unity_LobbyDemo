@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Photon.Pun;
+// using Photon.Pun;
 using TMPro;
 
-public class MenuScript : MonoBehaviourPunCallbacks {
+public class MenuScript : MonoBehaviour {
     private Singleton singletonManager;
 
 
@@ -13,7 +13,7 @@ public class MenuScript : MonoBehaviourPunCallbacks {
     public GameObject characterButtons;
 
 
-    // Variable Declaration
+    // Singleton Variables
     string sPlyrName;
     int sCharIndex = 0;
 
@@ -53,9 +53,10 @@ public class MenuScript : MonoBehaviourPunCallbacks {
 
         singletonManager.characterIndex = sCharIndex;
         singletonManager.playerName = sPlyrName;
+        singletonManager.onPlay = true;
 
         // Load game scene
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Lobby");
     } //-- PlayGame()
 
     public void ReloadLobby() {
@@ -73,9 +74,11 @@ public class MenuScript : MonoBehaviourPunCallbacks {
         sPlyrName = playerNameInput.text;
         sCharIndex = 0;
 
+        singletonManager.onPlay = false;
+        
         // Reload Lobby Scene
         SceneManager.LoadScene("Lobby");
-        PhotonNetwork.LeaveRoom();
+        // PhotonNetwork.LeaveRoom();
     } //-- ReloadLobby()
 }
 

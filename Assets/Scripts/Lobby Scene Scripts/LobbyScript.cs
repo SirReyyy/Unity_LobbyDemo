@@ -1,15 +1,30 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LobbyScript : MonoBehaviour {
-    
+    private Singleton singletonManager;
     public GameObject homePanel;
     public GameObject lobbyPanel;
 
+    // Singleton Variable
+    bool sOnPlay = false;
+
     void Start() {
-        // Default panel states
-        homePanel.SetActive(true);
-        lobbyPanel.SetActive(false);
+        singletonManager = Singleton.Instance;
+        sOnPlay = singletonManager.onPlay;
+
+        if(sOnPlay) {
+            // Default panel states
+            homePanel.SetActive(false);
+            lobbyPanel.SetActive(true);
+        } else {
+            // Default panel states
+            homePanel.SetActive(true);
+            lobbyPanel.SetActive(false);
+        }
+
+        Cursor.visible = true;
     } //-- Start()
 
     public void ShowStartButton() {
@@ -17,10 +32,9 @@ public class LobbyScript : MonoBehaviour {
         homePanel.transform.Find("Connection_Txt").gameObject.SetActive(false);
     } //-- ShowStartButton()
 
-    public void ShowLobbyPanel() {
-        homePanel.SetActive(false);
-        lobbyPanel.SetActive(true);
-    } //-- ShowLobbyPanel()
+    public void LoadMenuScene() {
+        SceneManager.LoadScene("Menu");
+    } //-- LoadMenuScene()
 }
 
 

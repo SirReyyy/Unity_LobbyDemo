@@ -2497,7 +2497,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 348377089}
         m_TargetAssemblyTypeName: LobbyScript, Assembly-CSharp
-        m_MethodName: ShowLobbyPanel
+        m_MethodName: LoadMenuScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3034,6 +3034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterIndex: 0
   playerName: 
+  onPlay: 0
 --- !u!1 &1888654587
 GameObject:
   m_ObjectHideFlags: 0
