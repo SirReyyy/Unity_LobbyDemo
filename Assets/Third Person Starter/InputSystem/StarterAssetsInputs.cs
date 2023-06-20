@@ -1,4 +1,6 @@
 using UnityEngine;
+using Photon.Pun;
+
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 //using UnityEngine.InputSystem;
 using UnityEngine.InputSystem;
@@ -22,34 +24,55 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
+		// Photon View component
+        PhotonView photonView;
+
+		void Start() {
+			photonView = photonView = GetComponent<PhotonView>();
+		}
+
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
-			MoveInput(value.Get<Vector2>());
+			if(photonView.IsMine) {
+				MoveInput(value.Get<Vector2>());
+			}
+			// MoveInput(value.Get<Vector2>());
 		}
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
-			{
-				LookInput(value.Get<Vector2>());
+			if(photonView.IsMine) {
+				if(cursorInputForLook)
+				{
+					LookInput(value.Get<Vector2>());
+				}
 			}
 		}
 
 		public void OnJump(InputValue value)
 		{
-			JumpInput(value.isPressed);
+			if(photonView.IsMine) {
+				JumpInput(value.isPressed);
+			}
+			// JumpInput(value.isPressed);
 		}
 
 		public void OnSprint(InputValue value)
 		{
-			SprintInput(value.isPressed);
+			if(photonView.IsMine) {
+				SprintInput(value.isPressed);
+			}
+			// SprintInput(value.isPressed);
 		}
 
 		//-- added --
 		public void OnExit(InputValue value)
 		{
-			ExitInput(value.isPressed);
+			if(photonView.IsMine) {
+				ExitInput(value.isPressed);
+			}
+			// ExitInput(value.isPressed);
 		}
 		//-- added --
 #endif

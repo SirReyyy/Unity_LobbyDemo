@@ -1,4 +1,6 @@
 using UnityEngine;
+using Photon.Pun;
+using Cinemachine;
 using TMPro;
 
 public class PlayerScript : MonoBehaviour {
@@ -7,20 +9,27 @@ public class PlayerScript : MonoBehaviour {
     public TMP_Text playerName;
     public GameObject characterMesh;
     private SkinnedMeshRenderer[] skinnedMeshes;
+    
+    public GameObject PCFollowPrefab;
+    CinemachineVirtualCamera vcam;
+
+    PhotonView photonView;
 
 
     void Start() {
         singletonManager = Singleton.Instance;
+        photonView = photonView = GetComponent<PhotonView>();
 
-        int sCharIndex = singletonManager.characterIndex;
-        string sPlyrName = singletonManager.playerName;
+        if(photonView.IsMine) {
+            int sCharIndex = singletonManager.characterIndex;
+            string sPlyrName = singletonManager.playerName;
 
-        skinnedMeshes = characterMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
+            skinnedMeshes = characterMesh.GetComponentsInChildren<SkinnedMeshRenderer>();
 
-        playerName.text = sPlyrName;
-        LoadSkinnedMesh(sCharIndex);
-
-        Cursor.visible = false;
+            playerName.text = sPlyrName;
+            LoadSkinnedMesh(sCharIndex);
+            SpawnCameraFollow();
+        }
     } //-- Start()
 
     private void LoadSkinnedMesh(int index) {
@@ -32,6 +41,13 @@ public class PlayerScript : MonoBehaviour {
             skinnedMeshes[index].enabled = true;
         }
     } //-- LoadSkinnedMesh()
+
+    private void SpawnCameraFollow() {
+        vcam = PCFollowPrefab.GetComponent<CinemachineVirtualCamera>();
+        vcam.Follow = gameObject.transform.GetChild(0).gameObject.transform;
+
+        Instantiate(PCFollowPrefab);
+    } //-- SpawnCameraFollow()
 }
 
 
