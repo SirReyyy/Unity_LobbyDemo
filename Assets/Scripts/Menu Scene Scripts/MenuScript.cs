@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 using TMPro;
 
-public class MenuScript : MonoBehaviour
-{
+public class MenuScript : MonoBehaviourPunCallbacks {
     private Singleton singletonManager;
 
 
@@ -75,6 +75,7 @@ public class MenuScript : MonoBehaviour
 
         // Reload Lobby Scene
         SceneManager.LoadScene("Lobby");
+        PhotonNetwork.LeaveRoom();
     } //-- ReloadLobby()
 }
 

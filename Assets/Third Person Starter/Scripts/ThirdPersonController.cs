@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Photon.Pun;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -122,6 +123,9 @@ namespace StarterAssets
             }
         }
 
+        // Photon View component
+        PhotonView photonView;
+
 
         private void Awake()
         {
@@ -150,15 +154,21 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
+
+            //
+            photonView = GetComponent<PhotonView>();
         }
 
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
 
-            JumpAndGravity();
-            GroundedCheck();
-            Move();
+            if(photonView.IsMine) {
+                JumpAndGravity();
+                GroundedCheck();
+                Move();
+            }
         }
 
         private void LateUpdate()
