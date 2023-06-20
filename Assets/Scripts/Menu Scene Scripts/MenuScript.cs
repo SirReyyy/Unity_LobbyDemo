@@ -11,7 +11,6 @@ public class MenuScript : MonoBehaviour
     // UI Game Objects
     public TMP_InputField playerNameInput;
     public GameObject characterButtons;
-    public GameObject characterPanel;
 
 
     // Variable Declaration
@@ -55,7 +54,7 @@ public class MenuScript : MonoBehaviour
         singletonManager.characterIndex = sCharIndex;
         singletonManager.playerName = sPlyrName;
 
-        // Load new scene
+        // Load game scene
         SceneManager.LoadScene("Game");
     } //-- PlayGame()
 
